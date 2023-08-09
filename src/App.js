@@ -1,31 +1,25 @@
-import { Field, Form, Formik } from "formik";
+import { Field, Form, Formik, useFormik } from "formik";
 import "./App.css";
 
 function App() {
+  const {handleSubmit, handleChange, values} = useFormik({
+    initialValues: {
+      firstName: "User",
+      lastName: "Surname",
+      email: "er@er.com",
+      gender: "female",
+      hobiler: [],
+      country: "usa",
+    },
+
+    onSubmit: (values) => {
+      console.log(values);
+    },
+  });
   return (
     <div className="App">
       <h1>Sign Up</h1>
-      <Formik
-        initialValues={{
-          firstName: "User",
-          lastName: "Surname",
-          email: "er@er.com",
-          gender: "female",
-          hobiler:[],
-          country:"usa"
-        }}
-        /*
-        onSubmit={async (values) => {
-          await new Promise((r) => setTimeout(r, 500));
-          console.log(values);
-          alert(JSON.stringify(values, null, 2));
-        }}
-        */
-        onSubmit={(values) => {
-          console.log(values);
-        }}
-      >
-        {({ handleSubmit, handleChange, values }) => (
+      
           <form onSubmit={handleSubmit}>
             <label htmlFor="firstName">First Name</label>
             <input
@@ -68,7 +62,7 @@ function App() {
               name="gender"
               value="male"
               onChange={handleChange}
-              checked={values.gender ==="male"}
+              checked={values.gender === "male"}
             />
             <span>Female</span>
             <input
@@ -76,7 +70,7 @@ function App() {
               name="gender"
               value="female"
               onChange={handleChange}
-              checked={values.gender ==="female"}
+              checked={values.gender === "female"}
             />
 
             <br />
@@ -87,7 +81,6 @@ function App() {
               name="hobiler"
               value="Footbol"
               onChange={handleChange}
-               
             />
             <span>Sinema</span>
             <input
@@ -95,7 +88,6 @@ function App() {
               name="hobiler"
               value="Sinema"
               onChange={handleChange}
-               
             />
             <span>Fotoğrafçılık</span>
             <input
@@ -103,11 +95,15 @@ function App() {
               name="hobiler"
               value="Fotograf"
               onChange={handleChange}
-              
             />
             <br />
             <br />
-            <select name="country" value={values.country} id="country" onChange={handleChange}>
+            <select
+              name="country"
+              value={values.country}
+              id="country"
+              onChange={handleChange}
+            >
               <option value="tr">Turkey</option>
               <option value="en">England</option>
               <option value="usa">USA</option>
@@ -119,7 +115,7 @@ function App() {
             <br />
             {JSON.stringify(values)}
           </form>
-        )}
+        
 
         {/*
       <Form>
@@ -143,7 +139,7 @@ function App() {
         <button type="submit">Submit</button>
       </Form>
     */}
-      </Formik>
+       
     </div>
   );
 }
